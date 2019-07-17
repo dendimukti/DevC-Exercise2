@@ -2,10 +2,117 @@
 <html lang="en">
 <head>
     <title>Exercise 2</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        var nilai = [];
+        var operasi = [];
+        var result = 0;
+        var display;
+        var display_all = "";
+
+        function addnum(data){
+            display = document.getElementById("display").value;
+            display = display + data;
+            display_all = display_all + data;
+            document.getElementById("display").value = display;
+            document.getElementById("displayall").value = display_all;
+        }
+
+        function operator(data){
+            display_all = display_all + data;
+            simpan();
+            operasi.push(data);
+        }
+
+        function simpan(){
+            nilai.push(parseInt(display));
+            document.getElementById("display").value = "";
+            document.getElementById("displayall").value = display_all;
+        }
+
+        function samadengan(){
+            simpan();
+            // alert(nilai);
+            // alert(operasi);
+            var tmp = 0;
+            var resTmp = 0;
+            for(let i=0; i<operasi.length; i++){
+                if(operasi[i] === '+'){
+                    tmp = nilai[i] + nilai[i+1];
+                }
+                else if(operasi[i] === '-'){
+                    tmp = nilai[i] - nilai[i+1];
+                }
+                else if(operasi[i] === 'x'){
+                    tmp = nilai[i] * nilai[i+1];
+                }
+                else if(operasi[i] === '/'){
+                    tmp = nilai[i] / nilai[i+1];
+                }
+
+                if((i+1) == operasi.length)
+                    resTmp = tmp;
+                else
+                    nilai[i+1] = tmp;
+
+                // alert(tmp);
+            }
+
+            document.getElementById("display").value = resTmp;
+            selesai();
+        }
+// 1,2,3,4,2,1
+//  +,-,+,/,x
+
+        function selesai(){
+            nilai = [];
+            operasi = [];
+            result = 0;
+        }
+        function hapus(){
+            selesai();
+            display = "";
+            display_all = "";
+            document.getElementById("display").value = display;
+            document.getElementById("displayall").value = display_all;
+        }
+        function displayall(){
+        }
+
+    </script>
 </head>
 <body>
     <center>
         <h1>Kalkulator</h1>
+        <input type="text" id="displayall" readonly>
+        <br>
+        <input type="text" id="display" readonly>
+        <br>
+
+        <button type="button" onclick="addnum('1')" class="btn btn-light btn-outline-dark ">1</button>
+        <button type="button" onclick="addnum('2')" class="btn btn-light btn-outline-dark">2</button>
+        <button type="button" onclick="addnum('3')" class="btn btn-light btn-outline-dark">3</button>
+        <button type="button" onclick="operator('+')" class="btn btn-secondary">&nbsp;+&nbsp;</button>
+        <br>
+        <button type="button" onclick="addnum('4')" class="btn btn-light btn-outline-dark">4</button>
+        <button type="button" onclick="addnum('5')" class="btn btn-light btn-outline-dark">5</button>
+        <button type="button" onclick="addnum('6')" class="btn btn-light btn-outline-dark">6</button>
+        <button type="button" onclick="operator('-')" class="btn btn-secondary">&nbsp;-&nbsp;</button>
+        <br>
+        <button type="button" onclick="addnum('7')" class="btn btn-light btn-outline-dark">7</button>
+        <button type="button" onclick="addnum('8')" class="btn btn-light btn-outline-dark">8</button>
+        <button type="button" onclick="addnum('9')" class="btn btn-light btn-outline-dark">9</button>
+        <button type="button" onclick="operator('x')" class="btn btn-secondary">&nbsp;x&nbsp;</button>
+        <br>
+        <button type="button" onclick="hapus()" class="btn btn-light btn-outline-dark">C</button>
+        <button type="button" onclick="addnum('0')" class="btn btn-light btn-outline-dark">0</button>
+        <button type="button" onclick="samadengan()" class="btn btn-primary">=</button>
+        <button type="button" onclick="operator('/')" class="btn btn-secondary">&nbsp;/&nbsp;</button>
+        <br>
     </center>
 </body>
 </html>
